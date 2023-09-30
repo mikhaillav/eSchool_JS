@@ -1,9 +1,7 @@
 {
 	"compilerOptions": {
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
+		"module": "CommonJS",
 		"target": "ESNext",
-		"sourceMap": true,
 		"outDir": "lib",
         "declaration": true,
         "declarationDir": "./types"
