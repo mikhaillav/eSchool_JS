@@ -1,24 +1,28 @@
-import axios from "axios";
-import sha256 from "js-sha256"
+import axios  from "axios";
+import { sha256 } from "js-sha256";
 
 export class eSchool {
 	readonly username: string;
 	readonly password: string;
-    readonly token: string
+	readonly token: string;
 
 	constructor(username: string, password: string) {
 		this.username = username;
 		this.password = password;
 	}
 
-	public async getToken() {
+	/**
+	 * Get JSESSIONID. It is used to auth your requests
+	 * @returns {Promise<string>} JSESSIONID
+	 */
+	public async getSessionId(): Promise<string> {
 		const FormData = require("form-data");
 
 		const form = new FormData();
 		form.append("username", this.username);
-		form.append("password", sha256.sha256(this.password));
+		form.append("password", sha256(this.password));
 		form.append(
-            "device",
+			"device",
 			`{
                 cliType: "web",
                 cliVer: "should be =< 16",
@@ -41,4 +45,3 @@ export class eSchool {
 			});
 	}
 }
-

@@ -1,14 +1,13 @@
 {
-    "compilerOptions": {
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "target": "ESNext",
-        "sourceMap": true,
-        "outDir": "dist"
-    },
-    "include": [
-        "src/**/*",
-        "tests/**/*"
-, "index.js"    ],
-    "typeRoots": ["./types/*", "./node_modules/@types"]
+	"compilerOptions": {
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"target": "ESNext",
+		"sourceMap": true,
+		"outDir": "lib",
+        "declaration": true,
+        "declarationDir": "./types"
+	},
+	"include": ["src/**/*", "tests/**/*"],
+	"typeRoots": ["./node_modules/@types"]
 }
