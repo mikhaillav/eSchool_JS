@@ -11,6 +11,6 @@
       "moduleResolution": "Node",
       "esModuleInterop": true
     },
-    "include": ["src/**/*"],
+    "include": ["./src/**/*", "./src/types.d.ts"],
     "exclude": ["node_modules", "lib", "types", "test"]
 }
