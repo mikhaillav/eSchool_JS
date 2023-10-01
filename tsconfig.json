@@ -11,5 +11,6 @@
       "moduleResolution": "Bundler",
       "esModuleInterop": true
     },
+    "include": ["src/**/*"],
     "exclude": ["node_modules", "lib", "types", "test"]
 }

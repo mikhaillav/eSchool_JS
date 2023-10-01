@@ -26,12 +26,12 @@ class eSchool {
 			"device",
 			`{
                 cliType: "web",
-                cliVer: "should be =< 16",
-                pushToken: "this message should be exactly 64 symbols so let it be 64 symbls",
-                deviceName: "looks like it has no limit for сharacters ＜（＾－＾）＞",
-                deviceModel: "it was number, but works with string as well =/, no limit too",
-                cliOs: "iPhOnE 2077",
-                cliOsVer: true
+                cliVer: "0.0.0",
+                pushToken: "@@@@@@@@@@@@@@@@@@@Lorem ipsum dolor sit amet@@@@@@@@@@@@@@@@@@@",
+                deviceName: "a can of Pepsi",
+                deviceModel: "no sugar",
+                cliOs: "astra linux",
+                cliOsVer: null
 		    }`
 		);
 
