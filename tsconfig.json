@@ -1,11 +1,15 @@
 {
-	"compilerOptions": {
-		"module": "CommonJS",
-		"target": "ESNext",
-		"outDir": "lib",
-        "declaration": true,
-        "declarationDir": "./types"
-	},
-	"include": ["src/**/*", "tests/**/*"],
-	"typeRoots": ["./node_modules/@types"]
+    "compileOnSave": true,
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "lib": ["ESNext"],
+      "declaration": true,
+      "declarationDir": "./types",
+      "outDir": "lib",
+      "strict": true,
+      "moduleResolution": "Bundler",
+      "esModuleInterop": true
+    },
+    "exclude": ["node_modules", "lib", "types", "test"]
 }
