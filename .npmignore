@@ -1,6 +1,6 @@
 node_modules/
 .npm
-tsconfig
+tsconfig.json
 local_test
 src
 .husky/
