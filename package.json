@@ -1,10 +1,10 @@
 {
 	"name": "eschoolapi",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"description": "Not yet another api for eschool.center",
 	"main": "./lib/index.js",
 	"types": "./types/index.d.ts",
-    "type": "module",
+	"type": "module",
 	"prepublish": "npm run build",
 	"scripts": {
 		"clean": "rimraf ./lib/ && rimraf ./types/",
