@@ -2,3 +2,4 @@ node_modules/
 .npm
 local_test
 src
+.husky/
