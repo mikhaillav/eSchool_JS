@@ -2,8 +2,6 @@
 	"name": "eschoolapi",
 	"version": "0.0.7",
 	"description": "Not yet another api for eschool.center",
-	"author": "mikhaillav",
-	"license": "MIT",
 	"main": "lib/index.js",
 	"types": "./types/index.d.ts",
 	"prepublish": "npm run build",
@@ -12,6 +10,22 @@
 		"build": "npm run clean && tsc",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
+    "author": "mikhaillav",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mikhaillav/eSchool_JS"
+	},
+	"bugs": {
+        "url": "https://github.com/mikhaillav/eSchool_JS/issues"
+    },
+    "homepage": "https://github.com/mikhaillav/eSchool_JS#readme",
+    "keywords": [
+		"api",
+		"eschool",
+		"diary",
+		"school"
+	],
 	"husky": {
 		"hooks": {
 			"pre-commit": [
@@ -27,12 +41,6 @@
 		"ts-node": "^10.9.1",
 		"typescript": "^5.1.6"
 	},
-	"keywords": [
-		"api",
-		"eschool",
-		"diary",
-		"school"
-	],
 	"dependencies": {
 		"axios": "^1.5.1",
 		"js-sha256": "^0.10.1"

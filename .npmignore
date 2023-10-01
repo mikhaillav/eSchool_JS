@@ -1,5 +1,6 @@
 node_modules/
 .npm
+.ts
 local_test
 src
 .husky/
