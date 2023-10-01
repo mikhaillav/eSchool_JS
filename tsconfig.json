@@ -2,13 +2,13 @@
     "compileOnSave": true,
     "compilerOptions": {
       "target": "ESNext",
-      "module": "ESNext",
+      "module": "CommonJS",
       "lib": ["ESNext"],
       "declaration": true,
       "declarationDir": "./types",
       "outDir": "lib",
       "strict": true,
-      "moduleResolution": "Bundler",
+      "moduleResolution": "Node",
       "esModuleInterop": true
     },
     "include": ["src/**/*"],
