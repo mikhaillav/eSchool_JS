@@ -1,6 +1,6 @@
 {
 	"name": "eschoolapi",
-    "version": "0.0.6",
+	"version": "0.0.7",
 	"description": "Not yet another api for eschool.center",
 	"author": "mikhaillav",
 	"license": "MIT",
@@ -14,7 +14,10 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": ["npm run build", "git add ."]
+			"pre-commit": [
+				"npm run build",
+				"git add ."
+			]
 		}
 	},
 	"devDependencies": {
