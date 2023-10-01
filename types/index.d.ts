@@ -1,4 +1,4 @@
-export declare class eSchool {
+declare class eSchool {
     readonly username: string;
     readonly password: string;
     readonly token: string;
@@ -9,3 +9,5 @@ export declare class eSchool {
      */
     getSessionId(): Promise<string>;
 }
+export { eSchool };
+export default eSchool;

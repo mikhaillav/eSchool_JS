@@ -1,7 +1,7 @@
-import axios  from "axios";
+import axios from "axios";
 import { sha256 } from "js-sha256";
 
-export class eSchool {
+class eSchool {
 	readonly username: string;
 	readonly password: string;
 	readonly token: string;
@@ -9,7 +9,7 @@ export class eSchool {
 	constructor(username: string, password: string) {
 		this.username = username;
 		this.password = password;
-        this.token = ""
+		this.token = "";
 	}
 
 	/**
@@ -38,14 +38,16 @@ export class eSchool {
 		return axios
 			.post("https://app.eschool.center/ec-server/login", form)
 			.then((res) => {
-                if (res.headers["set-cookie"] != undefined) {
-				    return res.headers["set-cookie"][0].split(";")[0].split("JSESSIONID=")[1];
-                }
-                throw "Failed to parse token from cookies"
-				
+				if (res.headers["set-cookie"] != undefined) {
+					return res.headers["set-cookie"][0].split(";")[0].split("JSESSIONID=")[1];
+				}
+				throw "Failed to parse token from cookies";
 			})
 			.catch((e) => {
 				throw e;
 			});
 	}
 }
+
+export { eSchool };
+export default eSchool;
