@@ -1,3 +1,4 @@
+/// <reference types="./types/types.d.ts" />
 declare class eSchool {
     readonly username: string;
     readonly password: string;
@@ -25,15 +26,17 @@ declare class eSchool {
     /**
      * Возвращает профиль клиента
      *
-     * Данные по типу фио, дата рождения, номера телефонов
+     * Данные по типу фио, дата рождения, номера телефонов...
      */
     getProfile(): Promise<profile>;
     /**
-     * Возвращает данные ою устройстве клиента
-     *
-     * Не знаю зачем, но пусть будет. Все данные отсюда генерируются в @see getSessionId
+     * Возвращает данные об устройстве клиента
      */
     getDevice(): Promise<device>;
+    /**
+     * getCurrentPosition
+     */
+    getCurrentPosition(): Promise<any>;
 }
 export { eSchool };
 export default eSchool;
