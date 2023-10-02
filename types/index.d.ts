@@ -1,4 +1,4 @@
-/// <reference types="./types/types.d.ts" />
+import { profile, device, currentPosition } from "../types/types";
 declare class eSchool {
     readonly username: string;
     readonly password: string;
@@ -14,7 +14,7 @@ declare class eSchool {
      */
     setSessionId(sessionId: string): void;
     /**
-     * Получает айди сессии и устанавливает его
+     * Входит в систему (ставит валидный айди сессии)
      */
     login(): Promise<boolean>;
     /**
@@ -34,9 +34,9 @@ declare class eSchool {
      */
     getDevice(): Promise<device>;
     /**
-     * getCurrentPosition
+     * Возвращает данные об образовательном учереждении
      */
-    getCurrentPosition(): Promise<any>;
+    getCurrentPosition(): Promise<currentPosition>;
 }
 export { eSchool };
 export default eSchool;

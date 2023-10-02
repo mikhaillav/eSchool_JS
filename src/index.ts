@@ -1,5 +1,6 @@
 import axios from "axios";
 import { sha256 } from "js-sha256";
+import { profile, device, currentPosition } from "../types/types";
 
 class eSchool {
 	readonly username: string;

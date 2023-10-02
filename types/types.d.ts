@@ -1,4 +1,4 @@
-declare type profile = {
+export declare type profile = {
 	firstName: string;
 	lastName: string;
 	middleName: string;
@@ -8,7 +8,7 @@ declare type profile = {
 	email: string;
 };
 
-declare type device = {
+export declare type device = {
 	prsId: number;
 	pdId: number;
 	cliType: "web" | string;
@@ -23,7 +23,7 @@ declare type device = {
 	dbSessionId: number;
 };
 
-declare type currentPosition = {
+export declare type currentPosition = {
 	prsId: number;
 	prsFio: string;
 	userId: number;
