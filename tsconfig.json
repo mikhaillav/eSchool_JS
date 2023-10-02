@@ -9,8 +9,9 @@
       "outDir": "lib",
       "strict": true,
       "moduleResolution": "Node",
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      "types": ["./types/types.d.ts", "node"]
     },
-    "include": ["./src/**/*", "./src/types.d.ts"],
+    "include": ["./src/**/*", "types/types.d.ts"],
     "exclude": ["node_modules", "lib", "types", "test"]
 }
