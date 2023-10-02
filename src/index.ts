@@ -56,7 +56,7 @@ class eSchool {
 	}
 
 	/**
-	 * Получает айди сессии и устанавливает его
+	 * Входит в систему (ставит валидный айди сессии)
 	 */
 	public async login(): Promise<boolean> {
 		this.sessionId = await this.getSessionId();
@@ -77,13 +77,16 @@ class eSchool {
 			})
 			.then((res) => {
 				return res.data;
+			})
+			.catch((e) => {
+				throw e;
 			});
 	}
 
 	/**
 	 * Возвращает профиль клиента
 	 *
-	 * Данные по типу фио, дата рождения, номера телефонов
+	 * Данные по типу фио, дата рождения, номера телефонов...
 	 */
 	public async getProfile(): Promise<profile> {
 		let state = await this.getState();
@@ -92,14 +95,21 @@ class eSchool {
 	}
 
 	/**
-	 * Возвращает данные ою устройстве клиента
-     * 
-     * Не знаю зачем, но пусть будет. Все данные отсюда генерируются в @see getSessionId
+	 * Возвращает данные об устройстве клиента
 	 */
 	public async getDevice(): Promise<device> {
 		let state = await this.getState();
 		let device: device = state.user.device;
 		return device;
+	}
+
+	/**
+	 * Возвращает данные об образовательном учереждении
+	 */
+	public async getCurrentPosition(): Promise<currentPosition> {
+		let state = await this.getState();
+		let currentPosition: currentPosition = state.user.currentPosition;
+		return currentPosition;
 	}
 }
 
