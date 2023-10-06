@@ -4,9 +4,6 @@
 	"description": "Not yet another api for eschool.center",
 	"main": "./lib/index.js",
 	"types": "./types/index.d.ts",
-	"files": [
-		"src/types.d.ts"
-	],
 	"prepublish": "npm run build",
 	"scripts": {
 		"clean": "rimraf ./lib/",
