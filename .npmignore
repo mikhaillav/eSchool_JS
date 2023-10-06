@@ -3,4 +3,3 @@ node_modules/
 tsconfig.json
 local_test
 src
-.husky/
