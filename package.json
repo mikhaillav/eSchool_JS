@@ -1,6 +1,6 @@
 {
 	"name": "eschoolapi",
-	"version": "0.5.2",
+	"version": "0.5.3",
 	"description": "Not yet another api for eschool.center",
 	"main": "./lib/index.js",
 	"types": "./types/index.d.ts",
