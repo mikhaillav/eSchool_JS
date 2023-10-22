@@ -163,6 +163,11 @@ class eSchool {
 			});
 	}
 
+    /**
+     * Получает конкретную ветку (чат)
+     * 
+     * @param threadId Айди ветки
+     */
 	public async getThread(threadId: number): Promise<thread> {
 		return axios
 			.get(`https://app.eschool.center/ec-server/chat/thread?threadId=${threadId}`, {
@@ -182,6 +187,17 @@ class eSchool {
 			});
 	}
 
+    /**
+     * Получает сообщения в ветке (чате)
+     * 
+     * @param getNew Брать только новые (непрочитанные) сообщения?
+     * @param isSearch Режим посика? (не уверен)
+     * @param rowStart С какого по счету сообщения начинать
+     * @param rowsCount Количество возвращаемых сообщений
+     * @param threadId Айди ветки (чата)
+     * @param msgNums Не уверен
+     * @param searchText Текст для поиска (не уверен)
+     */
 	public async getMessages(getNew: boolean, isSearch: boolean, rowStart: number, rowsCount: number, threadId: number, msgNums?: number, searchText?: string): Promise<Array<message>> {
 		return axios
 			.put(

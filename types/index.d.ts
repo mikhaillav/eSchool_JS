@@ -45,7 +45,23 @@ declare class eSchool {
      * @param rowsCount Число рядов
      */
     getThreads(newOnly: boolean, row: number, rowsCount: number): Promise<Array<thread>>;
+    /**
+     * Получает конкретную ветку (чат)
+     *
+     * @param threadId Айди ветки
+     */
     getThread(threadId: number): Promise<thread>;
+    /**
+     * Получает сообщения в ветке (чате)
+     *
+     * @param getNew Брать только новые (непрочитанные) сообщения?
+     * @param isSearch Режим посика? (не уверен)
+     * @param rowStart С какого по счету сообщения начинать
+     * @param rowsCount Количество возвращаемых сообщений
+     * @param threadId Айди ветки (чата)
+     * @param msgNums Не уверен
+     * @param searchText Текст для поиска (не уверен)
+     */
     getMessages(getNew: boolean, isSearch: boolean, rowStart: number, rowsCount: number, threadId: number, msgNums?: number, searchText?: string): Promise<Array<message>>;
     sendMessage(threadId: number, msgText: string, msgUID?: string): Promise<sendedMessage>;
 }
