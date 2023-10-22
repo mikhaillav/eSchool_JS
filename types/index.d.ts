@@ -1,4 +1,4 @@
-import { profile, device, currentPosition, state } from "../types/types";
+import { profile, device, currentPosition, state, thread, sendedMessage, message } from "../types/types";
 declare class eSchool {
     readonly username: string;
     readonly password: string;
@@ -37,6 +37,17 @@ declare class eSchool {
      * Возвращает данные об образовательном учереждении
      */
     getCurrentPosition(): Promise<currentPosition>;
+    /**
+     * Получает активные ветки (чаты)
+     *
+     * @param newOnly Показывать только новые ветки?
+     * @param row Не уверен что это
+     * @param rowsCount Число рядов
+     */
+    getThreads(newOnly: boolean, row: number, rowsCount: number): Promise<Array<thread>>;
+    getThread(threadId: number): Promise<thread>;
+    getMessages(getNew: boolean, isSearch: boolean, rowStart: number, rowsCount: number, threadId: number, msgNums?: number, searchText?: string): Promise<Array<message>>;
+    sendMessage(threadId: number, msgText: string, msgUID?: string): Promise<sendedMessage>;
 }
 export { eSchool };
 export default eSchool;

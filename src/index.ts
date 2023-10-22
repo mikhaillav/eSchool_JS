@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { sha256 } from "js-sha256";
-import { profile, device, currentPosition, errorCause, state } from "../types/types";
+import { profile, device, currentPosition, errorCause, state, thread, sendedMessage, message } from "../types/types";
+import FormData from "form-data";
 
 class eSchool {
 	readonly username: string;
@@ -17,8 +18,6 @@ class eSchool {
 	 * Получает айди сессии. Используется для аутентификации запросов
 	 */
 	public async getSessionId(): Promise<string> {
-		const FormData = require("form-data");
-
 		const form = new FormData();
 		form.append("username", this.username);
 		form.append("password", sha256(this.password));
@@ -136,6 +135,103 @@ class eSchool {
 		let state = await this.getState();
 		let currentPosition: currentPosition = state.user.currentPosition;
 		return currentPosition;
+	}
+
+	/**
+	 * Получает активные ветки (чаты)
+	 *
+	 * @param newOnly Показывать только новые ветки?
+	 * @param row Не уверен что это
+	 * @param rowsCount Число рядов
+	 */
+	public async getThreads(newOnly: boolean, row: number, rowsCount: number): Promise<Array<thread>> {
+		return axios
+			.get(`https://app.eschool.center/ec-server/chat/threads?newOnly=${newOnly}&row=${row}&rowsCount=${rowsCount}`, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "getThreads",
+					cause: e
+				};
+				throw new Error(`Failed to get threads.`, { cause: cause });
+			});
+	}
+
+	public async getThread(threadId: number): Promise<thread> {
+		return axios
+			.get(`https://app.eschool.center/ec-server/chat/thread?threadId=${threadId}`, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "getThread",
+					cause: e
+				};
+				throw new Error(`Failed to get thread.`, { cause: cause });
+			});
+	}
+
+	public async getMessages(getNew: boolean, isSearch: boolean, rowStart: number, rowsCount: number, threadId: number, msgNums?: number, searchText?: string): Promise<Array<message>> {
+		return axios
+			.put(
+				`https://app.eschool.center/ec-server/chat/messages?getNew=${getNew}&isSearch=${isSearch}&rowStart=${rowStart}&rowsCount=${rowsCount}&threadId=${threadId}`,
+				{
+					msgNums: msgNums,
+					searchText: searchText
+				},
+				{
+					headers: {
+						Cookie: `JSESSIONID=${this.sessionId}`
+					}
+				}
+			)
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e) => {
+				let cause: errorCause = {
+					apiName: "getMessages",
+					cause: e
+				};
+				throw new Error(`Failed to get messages.`, { cause: cause });
+			});
+	}
+
+	public async sendMessage(threadId: number, msgText: string, msgUID?: string): Promise<sendedMessage> {
+		msgUID = msgUID === undefined ? "" : msgUID;
+
+		const form = new FormData();
+		form.append("threadId", threadId);
+		form.append("msgText", msgText);
+		form.append("msgUID", msgUID);
+
+		return axios
+			.post("https://app.eschool.center/ec-server/chat/sendNew", form, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e) => {
+				let cause: errorCause = {
+					apiName: "sendMessage",
+					cause: e
+				};
+				throw new Error(`Failed to send message.`, { cause: cause });
+			});
 	}
 }
 

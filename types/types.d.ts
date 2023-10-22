@@ -45,7 +45,7 @@ export declare type currentPosition = {
 	orgYearId: number;
 };
 
-export declare type apiName = "login" | "getState";
+export declare type apiName = "login" | "getState" | "getThreads" | "getMessages" | "getThread" | "sendMessage";
 
 export declare type errorCause = {
 	apiName: apiName;
@@ -84,4 +84,64 @@ export declare type user = {
 	userId: number;
 	username: string;
 	validForDays: number;
+};
+
+export declare type thread = {
+	threadId: number;
+	msgId: number;
+	msgNum: number;
+	senderId: number;
+	senderFio: string;
+	sendDate: number;
+	isAllowReplay: number;
+	subject: string;
+	createDate: number;
+	showDate: number;
+	newReplayCount: number;
+	attachCount: number;
+	addrCnt: number;
+	dlgType: number;
+	msgPreview: string;
+	starCnt: number;
+};
+
+export declare type message = {
+	threadId: number;
+	msgId: number;
+	msgNum: number;
+	senderId: number;
+	senderFio: string;
+	sendDate: number;
+	msg: string;
+	createDate: number;
+	showDate: number;
+	attachCount: number;
+	stateId: number;
+	readedCount: number;
+	isStarred: boolean;
+	isUpThread: boolean;
+};
+
+export declare type sendedMessage = {
+	msgId: number;
+	prsCount: number;
+	msgUID: string;
+	message: {
+		threadId: number;
+		msgId: number;
+		msgNum: number;
+		senderId: number;
+		senderFio: string;
+		stateCode: "SENDED" | string;
+		stateName: string;
+		msg: string;
+		createDate: number;
+		showDate: number;
+		attachCount: number;
+		msgPreview: string;
+		stateId: number;
+		readedCount: number;
+		isStarred: boolean;
+		isUpThread: boolean;
+	};
 };
