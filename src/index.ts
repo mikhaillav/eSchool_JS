@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { sha256 } from "js-sha256";
-import { profile, device, currentPosition, errorCause } from "../types/types";
+import { profile, device, currentPosition, errorCause, state } from "../types/types";
 
 class eSchool {
 	readonly username: string;
@@ -42,7 +42,7 @@ class eSchool {
 					return res.headers["set-cookie"][0].split(";")[0].split("JSESSIONID=")[1];
 				}
 
-                let cause: errorCause = {
+				let cause: errorCause = {
 					apiName: "login",
 					cause: new Error("")
 				};
@@ -58,13 +58,13 @@ class eSchool {
 						cause.code = 1;
 						throw new Error("Got code: 1. Login/password error.", { cause: cause });
 					case 3:
-                        cause.code = 3;
+						cause.code = 3;
 						throw new Error("Got code: 3. Need to solve captcha.", { cause: cause });
 					case 4:
-                        cause.code = 4;
+						cause.code = 4;
 						throw new Error("Got code: 4. The account is blocked.", { cause: cause });
 					default:
-                        cause.code = e.response?.data;
+						cause.code = e.response?.data;
 						throw new Error(`Failed to handle error response from eSchool. Got data: ${e.response?.data}.`, { cause: cause });
 				}
 			});
@@ -90,7 +90,7 @@ class eSchool {
 	 *
 	 * Данные по типу айдишников, логина, данные об устройстве...
 	 */
-	public async getState(): Promise<any> {
+	public async getState(): Promise<state> {
 		return axios
 			.get("https://app.eschool.center/ec-server/state", {
 				headers: {

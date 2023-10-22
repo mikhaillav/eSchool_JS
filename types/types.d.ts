@@ -45,10 +45,43 @@ export declare type currentPosition = {
 	orgYearId: number;
 };
 
-export declare type apiName = "login" | "getState"
+export declare type apiName = "login" | "getState";
 
 export declare type errorCause = {
-    apiName: apiName,
-    cause: Error,
-    code?: number
-}
+	apiName: apiName;
+	cause: Error;
+	code?: number;
+};
+
+export declare type state = {
+	abtUnitId: number;
+	authenticated: boolean;
+	kindergartenId: number;
+	links: Array<any>;
+	menu: any;
+	noKindergartenId: number;
+	params: any;
+	profile: profile;
+	user: user;
+	userId: number;
+};
+
+export declare type user = {
+	codeLang: "eng" | "rus";
+	currentPosition: currentPosition;
+	device: device;
+	iso2: "en" | "ru";
+	menu: any;
+	orgId: number;
+	orgYearId: number;
+	personalized: boolean;
+	positions: Array<currentPosition>;
+	prsId: number;
+	regCount: number;
+	roles: Array<any>;
+	sessionEnd: number;
+	sessionId: number;
+	userId: number;
+	username: string;
+	validForDays: number;
+};

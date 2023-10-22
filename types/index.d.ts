@@ -1,4 +1,4 @@
-import { profile, device, currentPosition } from "../types/types";
+import { profile, device, currentPosition, state } from "../types/types";
 declare class eSchool {
     readonly username: string;
     readonly password: string;
@@ -22,7 +22,7 @@ declare class eSchool {
      *
      * Данные по типу айдишников, логина, данные об устройстве...
      */
-    getState(): Promise<any>;
+    getState(): Promise<state>;
     /**
      * Возвращает профиль клиента
      *
