@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { sha256 } from "js-sha256";
 import { profile, device, currentPosition } from "../types/types";
+import { eSchoolError } from "./error";
 
 class eSchool {
 	readonly username: string;
@@ -41,10 +42,19 @@ class eSchool {
 				if (res.headers["set-cookie"] != undefined) {
 					return res.headers["set-cookie"][0].split(";")[0].split("JSESSIONID=")[1];
 				}
-				throw "Failed to parse token from cookies";
+				throw new eSchoolError("Failed to parse token from cookies.", "login", 0);
 			})
-			.catch((e) => {
-				throw e;
+			.catch((e: AxiosError<any, any>) => {
+				switch (e.response?.data) {
+					case 1:
+						throw new eSchoolError("Got code: 1. Login/password error.", "login", 1);
+					case 3:
+						throw new eSchoolError("Got code: 3. Need to solve captcha.", "login", 3);
+					case 4:
+						throw new eSchoolError("Got code: 4. The account is blocked.", "login", 4);
+					default:
+						throw new eSchoolError(`Failed to handle error response from eSchool. Got data: ${e.response?.data}.`, "login");
+				}
 			});
 	}
 
