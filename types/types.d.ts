@@ -44,3 +44,11 @@ export declare type currentPosition = {
 	isReady: number;
 	orgYearId: number;
 };
+
+export declare type apiName = "login" | "getState"
+
+export declare type errorCause = {
+    apiName: apiName,
+    cause: Error,
+    code?: number
+}

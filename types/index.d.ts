@@ -16,7 +16,7 @@ declare class eSchool {
     /**
      * Входит в систему (ставит валидный айди сессии)
      */
-    login(): Promise<boolean>;
+    login(): Promise<undefined>;
     /**
      * Возвращает объект состояния клиента
      *

@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { sha256 } from "js-sha256";
-import { profile, device, currentPosition } from "../types/types";
-import { eSchoolError } from "./error";
+import { profile, device, currentPosition, errorCause } from "../types/types";
 
 class eSchool {
 	readonly username: string;
@@ -42,18 +41,31 @@ class eSchool {
 				if (res.headers["set-cookie"] != undefined) {
 					return res.headers["set-cookie"][0].split(";")[0].split("JSESSIONID=")[1];
 				}
-				throw new eSchoolError("Failed to parse token from cookies.", "login", 0);
+
+                let cause: errorCause = {
+					apiName: "login",
+					cause: new Error("")
+				};
+				throw new Error("Failed to parse token from cookies.", { cause: cause });
 			})
 			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "login",
+					cause: e
+				};
 				switch (e.response?.data) {
 					case 1:
-						throw new eSchoolError("Got code: 1. Login/password error.", "login", 1);
+						cause.code = 1;
+						throw new Error("Got code: 1. Login/password error.", { cause: cause });
 					case 3:
-						throw new eSchoolError("Got code: 3. Need to solve captcha.", "login", 3);
+                        cause.code = 3;
+						throw new Error("Got code: 3. Need to solve captcha.", { cause: cause });
 					case 4:
-						throw new eSchoolError("Got code: 4. The account is blocked.", "login", 4);
+                        cause.code = 4;
+						throw new Error("Got code: 4. The account is blocked.", { cause: cause });
 					default:
-						throw new eSchoolError(`Failed to handle error response from eSchool. Got data: ${e.response?.data}.`, "login");
+                        cause.code = e.response?.data;
+						throw new Error(`Failed to handle error response from eSchool. Got data: ${e.response?.data}.`, { cause: cause });
 				}
 			});
 	}
@@ -69,9 +81,8 @@ class eSchool {
 	/**
 	 * Входит в систему (ставит валидный айди сессии)
 	 */
-	public async login(): Promise<boolean> {
+	public async login(): Promise<undefined> {
 		this.sessionId = await this.getSessionId();
-		return true;
 	}
 
 	/**
@@ -89,8 +100,12 @@ class eSchool {
 			.then((res) => {
 				return res.data;
 			})
-			.catch((e) => {
-				throw e;
+			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "getState",
+					cause: e
+				};
+				throw new Error(`Failed to get state.`, { cause: cause });
 			});
 	}
 
