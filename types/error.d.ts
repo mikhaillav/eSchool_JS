@@ -1,5 +1,4 @@
 export declare class eSchoolError extends Error {
     code?: number;
-    type: "login";
-    constructor(msg: string, type: "login", code?: number);
+    constructor(msg: string, name: "login", code?: number);
 }
