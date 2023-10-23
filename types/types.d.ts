@@ -45,7 +45,7 @@ export declare type currentPosition = {
 	orgYearId: number;
 };
 
-export declare type apiName = "login" | "getState" | "getThreads" | "getMessages" | "getThread" | "sendMessage";
+export declare type apiName = "login" | "getState" | "getThreads" | "getMessages" | "getThread" | "sendMessage" | "saveThread" | "getPrivateThreads";
 
 export declare type errorCause = {
 	apiName: apiName;
@@ -132,7 +132,7 @@ export declare type sendedMessage = {
 		msgNum: number;
 		senderId: number;
 		senderFio: string;
-		stateCode: "SENDED" | string;
+		stateCode: "SENDED" | string; //FIXME: Add all of the types
 		stateName: string;
 		msg: string;
 		createDate: number;
@@ -145,3 +145,23 @@ export declare type sendedMessage = {
 		isUpThread: boolean;
 	};
 };
+
+export declare interface saveThreadOptions {
+	threadId?: number;
+	senderId?: number;
+	imageId?: number;
+	subject?: string;
+	isAllowReplay: 2 | number; //FIXME: Add all of the types
+	isGroup: boolean;
+	interlocutor: number;
+}
+
+export declare interface getMessagesOptions {
+	getNew: boolean;
+	isSearch: boolean;
+	rowStart: number;
+	rowsCount: number;
+	threadId: number;
+	msgNums?: number;
+	searchText?: string;
+}

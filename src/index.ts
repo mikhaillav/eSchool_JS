@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { sha256 } from "js-sha256";
-import { profile, device, currentPosition, errorCause, state, thread, sendedMessage, message } from "../types/types";
+import { profile, device, currentPosition, errorCause, state, thread, sendedMessage, message, saveThreadOptions, getMessagesOptions } from "../types/types";
 import FormData from "form-data";
 
 class eSchool {
@@ -163,11 +163,11 @@ class eSchool {
 			});
 	}
 
-    /**
-     * Получает конкретную ветку (чат)
-     * 
-     * @param threadId Айди ветки
-     */
+	/**
+	 * Получает конкретную ветку (чат)
+	 *
+	 * @param threadId Айди ветки
+	 */
 	public async getThread(threadId: number): Promise<thread> {
 		return axios
 			.get(`https://app.eschool.center/ec-server/chat/thread?threadId=${threadId}`, {
@@ -187,24 +187,16 @@ class eSchool {
 			});
 	}
 
-    /**
-     * Получает сообщения в ветке (чате)
-     * 
-     * @param getNew Брать только новые (непрочитанные) сообщения?
-     * @param isSearch Режим посика? (не уверен)
-     * @param rowStart С какого по счету сообщения начинать
-     * @param rowsCount Количество возвращаемых сообщений
-     * @param threadId Айди ветки (чата)
-     * @param msgNums Не уверен
-     * @param searchText Текст для поиска (не уверен)
-     */
-	public async getMessages(getNew: boolean, isSearch: boolean, rowStart: number, rowsCount: number, threadId: number, msgNums?: number, searchText?: string): Promise<Array<message>> {
+	/**
+	 * Получает сообщения в ветке (чате)
+	 */
+	public async getMessages(options: getMessagesOptions): Promise<Array<message>> {
 		return axios
 			.put(
-				`https://app.eschool.center/ec-server/chat/messages?getNew=${getNew}&isSearch=${isSearch}&rowStart=${rowStart}&rowsCount=${rowsCount}&threadId=${threadId}`,
+				`https://app.eschool.center/ec-server/chat/messages?getNew=${options.getNew}&isSearch=${options.isSearch}&rowStart=${options.rowStart}&rowsCount=${options.rowsCount}&threadId=${options.threadId}`,
 				{
-					msgNums: msgNums,
-					searchText: searchText
+					msgNums: options.msgNums,
+					searchText: options.searchText
 				},
 				{
 					headers: {
@@ -224,6 +216,13 @@ class eSchool {
 			});
 	}
 
+    /**
+     * Отправить сообщение в ветку (чат)
+     * 
+     * @param threadId Айди ветки (чата)
+     * @param msgText Сообщение
+     * @param msgUID Вроде как айди сообщения, но его особо не проверяют
+     */
 	public async sendMessage(threadId: number, msgText: string, msgUID?: string): Promise<sendedMessage> {
 		msgUID = msgUID === undefined ? "" : msgUID;
 
@@ -249,6 +248,56 @@ class eSchool {
 				throw new Error(`Failed to send message.`, { cause: cause });
 			});
 	}
+
+    /**
+     * Сохранить ветку (чат) по prsId
+     * 
+     * Используется что бы создавать новые чаты/группы. Так-же сохраняется в PrivateThreads
+     * @see getPrivateThreads
+     * @returns Айди ветки
+     */
+	public async saveThread(options: saveThreadOptions): Promise<number> {
+		return axios
+			.put(`https://app.eschool.center/ec-server/chat/saveThread`, options, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e) => {
+				let cause: errorCause = {
+					apiName: "saveThread",
+					cause: e
+				};
+				throw new Error(`Failed to save thread.`, { cause: cause });
+			});
+	}
+
+    /**
+     * Получить приватные (сохраненные) ветки
+     * 
+     * @returns Мапу с ключем prsId юзера, а значением айди ветки 
+     */
+    public async getPrivateThreads(): Promise<Map<string, number>> {
+        return axios
+			.get(`https://app.eschool.center/ec-server/chat/privateThreads`, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+                return new Map<string, number>(Object.entries(res.data))
+			})
+			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "getPrivateThreads",
+					cause: e
+				};
+				throw new Error(`Failed to get private threads.`, { cause: cause });
+			});
+    }
 }
 
 export { eSchool };

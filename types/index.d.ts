@@ -1,4 +1,4 @@
-import { profile, device, currentPosition, state, thread, sendedMessage, message } from "../types/types";
+import { profile, device, currentPosition, state, thread, sendedMessage, message, saveThreadOptions, getMessagesOptions } from "../types/types";
 declare class eSchool {
     readonly username: string;
     readonly password: string;
@@ -53,17 +53,30 @@ declare class eSchool {
     getThread(threadId: number): Promise<thread>;
     /**
      * Получает сообщения в ветке (чате)
-     *
-     * @param getNew Брать только новые (непрочитанные) сообщения?
-     * @param isSearch Режим посика? (не уверен)
-     * @param rowStart С какого по счету сообщения начинать
-     * @param rowsCount Количество возвращаемых сообщений
-     * @param threadId Айди ветки (чата)
-     * @param msgNums Не уверен
-     * @param searchText Текст для поиска (не уверен)
      */
-    getMessages(getNew: boolean, isSearch: boolean, rowStart: number, rowsCount: number, threadId: number, msgNums?: number, searchText?: string): Promise<Array<message>>;
+    getMessages(options: getMessagesOptions): Promise<Array<message>>;
+    /**
+     * Отправить сообщение в ветку (чат)
+     *
+     * @param threadId Айди ветки (чата)
+     * @param msgText Сообщение
+     * @param msgUID Вроде как айди сообщения, но его особо не проверяют
+     */
     sendMessage(threadId: number, msgText: string, msgUID?: string): Promise<sendedMessage>;
+    /**
+     * Сохранить ветку (чат) по prsId
+     *
+     * Используется что бы создавать новые чаты/группы. Так-же сохраняется в PrivateThreads
+     * @see getPrivateThreads
+     * @returns Айди ветки
+     */
+    saveThread(options: saveThreadOptions): Promise<number>;
+    /**
+     * Получить приватные (сохраненные) ветки
+     *
+     * @returns Мапу с ключем prsId юзера, а значением айди ветки
+     */
+    getPrivateThreads(): Promise<Map<string, number>>;
 }
 export { eSchool };
 export default eSchool;
