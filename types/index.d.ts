@@ -1,4 +1,4 @@
-import { profile, device, currentPosition, state, thread, sendedMessage, message, saveThreadOptions, getMessagesOptions } from "../types/types";
+import { profile, device, currentPosition, state, thread, sendedMessage, message, saveThreadOptions, getMessagesOptions, group, onlyGroup, periods, diaryUnits, newProfile } from "../types/types";
 declare class eSchool {
     readonly username: string;
     readonly password: string;
@@ -56,7 +56,7 @@ declare class eSchool {
      */
     getMessages(options: getMessagesOptions): Promise<Array<message>>;
     /**
-     * Отправить сообщение в ветку (чат)
+     * Отправляет сообщение в ветку (чат)
      *
      * @param threadId Айди ветки (чата)
      * @param msgText Сообщение
@@ -64,7 +64,7 @@ declare class eSchool {
      */
     sendMessage(threadId: number, msgText: string, msgUID?: string): Promise<sendedMessage>;
     /**
-     * Сохранить ветку (чат) по prsId
+     * Сохраняет ветку (чат) по prsId
      *
      * Используется что бы создавать новые чаты/группы. Так-же сохраняется в PrivateThreads
      * @see getPrivateThreads
@@ -72,11 +72,43 @@ declare class eSchool {
      */
     saveThread(options: saveThreadOptions): Promise<number>;
     /**
-     * Получить приватные (сохраненные) ветки
+     * Получает приватные (сохраненные) ветки
      *
      * @returns Мапу с ключем prsId юзера, а значением айди ветки
      */
     getPrivateThreads(): Promise<Map<string, number>>;
+    /**
+     * Получает классы(группы) пользователя
+     *
+     * @param userId Айди пользователя
+     */
+    getClassByUser(userId: number): Promise<Array<group>>;
+    /**
+     * Получает расширенную информацию о группе (классе)
+     *
+     * @param groupId Айди группы (класса)
+     */
+    getGroupOnly(groupId: number): Promise<onlyGroup>;
+    /**
+     * Получает учебный период
+     *
+     * @param groupId Айди группы (класса)
+     * @param number Что-то непонятное, по дефолту ноль
+     */
+    getPeriodsByGroup(groupId: number, number?: number): Promise<periods>;
+    /**
+     * Получает объекты школьных предметов
+     *
+     * @param userId Айди пользователя
+     * @param elid Айди периода
+     */
+    getDiaryUnits(userId: number, elid: number): Promise<diaryUnits>;
+    /**
+     * Получает расширенную информацию о профиле
+     *
+     * @param prsId Айди персоны (не уверен)
+     */
+    getProfileNew(prsId: number): Promise<newProfile>;
 }
 export { eSchool };
 export default eSchool;

@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { sha256 } from "js-sha256";
-import { profile, device, currentPosition, errorCause, state, thread, sendedMessage, message, saveThreadOptions, getMessagesOptions } from "../types/types";
+import { profile, device, currentPosition, errorCause, state, thread, sendedMessage, message, saveThreadOptions, getMessagesOptions, group, onlyGroup, periods, diaryUnits, newProfile } from "../types/types";
 import FormData from "form-data";
 
 class eSchool {
@@ -216,13 +216,13 @@ class eSchool {
 			});
 	}
 
-    /**
-     * Отправить сообщение в ветку (чат)
-     * 
-     * @param threadId Айди ветки (чата)
-     * @param msgText Сообщение
-     * @param msgUID Вроде как айди сообщения, но его особо не проверяют
-     */
+	/**
+	 * Отправляет сообщение в ветку (чат)
+	 *
+	 * @param threadId Айди ветки (чата)
+	 * @param msgText Сообщение
+	 * @param msgUID Вроде как айди сообщения, но его особо не проверяют
+	 */
 	public async sendMessage(threadId: number, msgText: string, msgUID?: string): Promise<sendedMessage> {
 		msgUID = msgUID === undefined ? "" : msgUID;
 
@@ -249,13 +249,13 @@ class eSchool {
 			});
 	}
 
-    /**
-     * Сохранить ветку (чат) по prsId
-     * 
-     * Используется что бы создавать новые чаты/группы. Так-же сохраняется в PrivateThreads
-     * @see getPrivateThreads
-     * @returns Айди ветки
-     */
+	/**
+	 * Сохраняет ветку (чат) по prsId
+	 *
+	 * Используется что бы создавать новые чаты/группы. Так-же сохраняется в PrivateThreads
+	 * @see getPrivateThreads
+	 * @returns Айди ветки
+	 */
 	public async saveThread(options: saveThreadOptions): Promise<number> {
 		return axios
 			.put(`https://app.eschool.center/ec-server/chat/saveThread`, options, {
@@ -275,20 +275,20 @@ class eSchool {
 			});
 	}
 
-    /**
-     * Получить приватные (сохраненные) ветки
-     * 
-     * @returns Мапу с ключем prsId юзера, а значением айди ветки 
-     */
-    public async getPrivateThreads(): Promise<Map<string, number>> {
-        return axios
+	/**
+	 * Получает приватные (сохраненные) ветки
+	 *
+	 * @returns Мапу с ключем prsId юзера, а значением айди ветки
+	 */
+	public async getPrivateThreads(): Promise<Map<string, number>> {
+		return axios
 			.get(`https://app.eschool.center/ec-server/chat/privateThreads`, {
 				headers: {
 					Cookie: `JSESSIONID=${this.sessionId}`
 				}
 			})
 			.then((res) => {
-                return new Map<string, number>(Object.entries(res.data))
+				return new Map<string, number>(Object.entries(res.data));
 			})
 			.catch((e: AxiosError<any, any>) => {
 				let cause: errorCause = {
@@ -297,7 +297,131 @@ class eSchool {
 				};
 				throw new Error(`Failed to get private threads.`, { cause: cause });
 			});
-    }
+	}
+
+	/**
+	 * Получает классы(группы) пользователя
+	 *
+	 * @param userId Айди пользователя
+	 */
+	public async getClassByUser(userId: number): Promise<Array<group>> {
+		return axios
+			.get(`https://app.eschool.center/ec-server/usr/getClassByUser?userId=${userId}`, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "getClassByUser",
+					cause: e
+				};
+				throw new Error(`Failed to get class by user.`, { cause: cause });
+			});
+	}
+
+	/**
+	 * Получает расширенную информацию о группе (классе)
+	 *
+	 * @param groupId Айди группы (класса)
+	 */
+	public async getGroupOnly(groupId: number): Promise<onlyGroup> {
+		return axios
+			.get(`https://app.eschool.center/ec-server/groups/getGroupOnly?groupId=${groupId}`, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "getGroupOnly",
+					cause: e
+				};
+				throw new Error(`Failed to get only group.`, { cause: cause });
+			});
+	}
+
+	/**
+	 * Получает учебный период
+	 *
+	 * @param groupId Айди группы (класса)
+	 * @param number Что-то непонятное, по дефолту ноль
+	 */
+	public async getPeriodsByGroup(groupId: number, number?: number): Promise<periods> {
+		number = number == undefined ? 0 : number;
+
+		return axios
+			.get(`https://app.eschool.center/ec-server/dict/periods/${number}?groupId=${groupId}`, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "getPeriodsByGroup",
+					cause: e
+				};
+				throw new Error(`Failed to get periods by group.`, { cause: cause });
+			});
+	}
+
+	/**
+	 * Получает объекты школьных предметов
+	 *
+	 * @param userId Айди пользователя
+	 * @param elid Айди периода
+	 */
+	public async getDiaryUnits(userId: number, elid: number): Promise<diaryUnits> {
+		return axios
+			.get(`https://app.eschool.center/ec-server/student/getDiaryUnits/?userId=${userId}&eiId=${elid}`, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "getDiaryUnits",
+					cause: e
+				};
+				throw new Error(`Failed to get diary units.`, { cause: cause });
+			});
+	}
+
+    /**
+     * Получает расширенную информацию о профиле
+     * 
+     * @param prsId Айди персоны (не уверен)
+     */
+	public async getProfileNew(prsId: number): Promise<newProfile> {
+		return axios
+			.get(`https://app.eschool.center/ec-server/profile/getProfile_new?prsId=${prsId}`, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "getProfileNew",
+					cause: e
+				};
+				throw new Error(`Failed to get new profile.`, { cause: cause });
+			});
+	}
 }
 
 export { eSchool };

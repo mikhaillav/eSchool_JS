@@ -45,7 +45,20 @@ export declare type currentPosition = {
 	orgYearId: number;
 };
 
-export declare type apiName = "login" | "getState" | "getThreads" | "getMessages" | "getThread" | "sendMessage" | "saveThread" | "getPrivateThreads";
+export declare type apiName =
+	| "login"
+	| "getState"
+	| "getThreads"
+	| "getMessages"
+	| "getThread"
+	| "sendMessage"
+	| "saveThread"
+	| "getPrivateThreads"
+	| "getClassByUser"
+	| "getGroupOnly"
+	| "getPeriodsByGroup"
+	| "getDiaryUnits"
+	| "getProfileNew";
 
 export declare type errorCause = {
 	apiName: apiName;
@@ -165,3 +178,194 @@ export declare interface getMessagesOptions {
 	msgNums?: number;
 	searchText?: string;
 }
+
+export declare type group = {
+	groupId: number;
+	groupName: string;
+	groupTypeId: 1 | number; //FIXME: Add all of the types
+	groupTypeCode: "CL"; //FIXME: Add all of the types
+	begDate: number;
+	begDateStr: string;
+	yearId: number;
+	invState: 0 | number; //FIXME: Add all of the types
+	out: boolean;
+};
+
+export declare type onlyGroup = {
+	groupId: number;
+	groupTypeId: 1 | number; //FIXME: Add all of the types
+	groupTypeCode: "CL"; //FIXME: Add all of the types
+	groupName: string;
+	grpCode: "ORD" | string; //FIXME: Add all of the types
+	deps: Array<any>;
+	periodId: number;
+	classNum: number;
+	classIx: string;
+	classLevel: "MID" | string; //FIXME: Add all of the types
+	beginDate: number;
+	endDate: number;
+	isFirstInUnion: boolean;
+	eduId: number;
+	shiftNum: number;
+	finalEduDt: number;
+	hasWorkload: boolean;
+};
+
+export declare type period = {
+	id: number;
+	periodId: number;
+	level: number;
+	parentId: number;
+	num: number;
+	name: string;
+	date1: number;
+	date2: number;
+	date1Str: string;
+	date2Str: string;
+	typeId: 1 | number; //FIXME: Add all of the types
+	typeCode: "Y" | string; //FIXME: Add all of the types
+	typeName: "Acad. year" | string; //FIXME: Add all of the types
+	leaf: boolean;
+	study: boolean;
+	total: boolean;
+	closed: boolean;
+	extra: boolean;
+};
+
+export declare type periods = {
+	id: number;
+	typeId: 1 | number; //FIXME: Add all of the types
+	typeName: "Terms" | string; //FIXME: Add all of the types
+	date1: number;
+	date2: number;
+	date1Str: string;
+	date2Str: string;
+	name: string;
+	year1: number;
+	year2: number;
+	items: Array<period>;
+};
+
+export declare type diaryUnit = {
+	unitName: string;
+	unitId: number;
+	overMark?: number;
+	rating?: string;
+	totalMark?: string;
+	ttlEiId?: number;
+	ttlItCode?: "Q" | string; //FIXME: Add all of the types
+	ttlEiName?: string;
+	ttlMarkTypeId?: 1 | number; //FIXME: Add all of the types
+	ttlMarkTypeCode?: "PRD" | string; //FIXME: Add all of the types
+	ttlLackId?: number;
+	ttlIsSum?: false;
+	ttlPlanUnitMaxpoint?: number;
+	ttlFactUnitMaxpoint?: number;
+	ttlMarkSysId?: 1 | number; //FIXME: Add all of the types
+	markSysConvRules?: any; //FIXME: Add type
+	markSysId?: 2 | number; //FIXME: Add all of the types
+	ignoreFactTotalMaxpoint?: 0 | number;
+};
+
+export declare type diaryUnits = {
+	result: Array<diaryUnit>;
+};
+
+export declare type newProfileData = {
+	birthDate: string;
+	email: string;
+	firstName: string;
+	fotoId: number;
+	gender: 1 | 0;
+	homePhone: string;
+	lang: "eng" | "rus";
+	lastName: string;
+	login: string;
+	middleName: string;
+	mobilePhone: string;
+	otherPhone: string;
+	prsId: number;
+};
+
+export declare type newProfileDoc = {
+	docId: number;
+	docNum: string;
+	docSeries: string;
+	docType: "BIRTH_CERT" | string; //FIXME: Add all of the types
+	docTypeId: 2 | number; //FIXME: Add all of the types
+	docTypeName: string;
+	issueDt: string;
+	state: "DRAFT" | string; //FIXME: Add all of the types
+};
+
+export declare type address = {
+	addSrc: "MANUAL" | string; //FIXME: Add all of the types
+	adrText: string;
+	adrTypeCode: "REG_ADDR" | "RES_ADDR";
+	adrTypeId: 1 | 2;
+	adrTypeName: string;
+	fiasId: "MANUAL" | string; //FIXME: Add all of the types
+	fiasId1: "MANUAL" | string; //WTF eschool?
+	prsAdrId: number;
+};
+
+export declare type relative = {
+	data: newProfileData;
+	profile: newProfile;
+	prsId: number;
+	relCode: "MOTHER" | "FATHER"; //FIXME: Add all of the types
+	relId: number;
+	relName: string;
+	relTypeId: 1 | 0;
+};
+export declare type newProfilePrsUsr = {
+	creDt: string;
+	crePrsId: number;
+	crePrsName: string;
+	orgId: number;
+	orgName: string;
+	orgNum: string; //it is really string
+	orgShortName: string;
+	posTypeCode: "S" | string; //FIXME: Add all of the types
+	posTypeId: 2 | number; //FIXME: Add all of the types
+	posTypeName: "Student" | string; //FIXME: Add all of the types
+	userId: number;
+};
+export declare type newProfilePupil = {
+	bvt: string;
+	classId: number;
+	className: string;
+	classNum: number;
+	eduYear: string;
+	enrType: "STD_ENROLMENT" | string; //FIXME: Add all of the types
+	evt: string;
+	isGraduated: "true" | "false"; //...
+	isReady: 1 | 0; //... why don't you like bool?
+	ordDate: string;
+	ordNum: string;
+	orgId: number;
+	orgName: string;
+	orgNum: string;
+	orgShortName: string;
+	yearId: string;
+};
+
+export declare type newProfile = {
+	birthDate: string;
+	email: string;
+	firstName: string;
+	gender: 1 | 0;
+	lastName: string;
+	middleName: string;
+	mobilephone: string;
+	prsAdr: Array<address>;
+	prsId: number;
+	prsRel: Array<relative>;
+	prsUsr: Array<newProfilePrsUsr>;
+	abitur?: Array<any>;
+	data?: newProfileData;
+	docs?: Array<newProfileDoc>;
+	fio?: string;
+	login?: string;
+	pupil?: Array<newProfilePupil>;
+};
