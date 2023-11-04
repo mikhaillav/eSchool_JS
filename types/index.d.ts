@@ -1,4 +1,4 @@
-import { profile, device, currentPosition, state, thread, sendedMessage, message, saveThreadOptions, getMessagesOptions, group, onlyGroup, periods, diaryUnits, newProfile } from "../types/types";
+import { profile, device, currentPosition, state, thread, sendedMessage, message, saveThreadOptions, getMessagesOptions, group, onlyGroup, periods, diaryUnits, newProfile, diaryPeriods } from "../types/types";
 declare class eSchool {
     readonly username: string;
     readonly password: string;
@@ -106,9 +106,16 @@ declare class eSchool {
     /**
      * Получает расширенную информацию о профиле
      *
-     * @param prsId Айди персоны (не уверен)
+     * @param prsId Айди персоны
      */
     getProfileNew(prsId: number): Promise<newProfile>;
+    /**
+     * Получает уроки за указанный период
+     *
+     * @param userId Айди пользователя
+     * @param elid Айди периода
+     */
+    getDiaryPeriod(userId: number, elid: number): Promise<diaryPeriods>;
 }
 export { eSchool };
 export default eSchool;

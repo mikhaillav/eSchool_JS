@@ -1,6 +1,23 @@
 import axios, { AxiosError } from "axios";
 import { sha256 } from "js-sha256";
-import { profile, device, currentPosition, errorCause, state, thread, sendedMessage, message, saveThreadOptions, getMessagesOptions, group, onlyGroup, periods, diaryUnits, newProfile } from "../types/types";
+import {
+	profile,
+	device,
+	currentPosition,
+	errorCause,
+	state,
+	thread,
+	sendedMessage,
+	message,
+	saveThreadOptions,
+	getMessagesOptions,
+	group,
+	onlyGroup,
+	periods,
+	diaryUnits,
+	newProfile,
+    diaryPeriods
+} from "../types/types";
 import FormData from "form-data";
 
 class eSchool {
@@ -399,11 +416,11 @@ class eSchool {
 			});
 	}
 
-    /**
-     * Получает расширенную информацию о профиле
-     * 
-     * @param prsId Айди персоны (не уверен)
-     */
+	/**
+	 * Получает расширенную информацию о профиле
+	 *
+	 * @param prsId Айди персоны
+	 */
 	public async getProfileNew(prsId: number): Promise<newProfile> {
 		return axios
 			.get(`https://app.eschool.center/ec-server/profile/getProfile_new?prsId=${prsId}`, {
@@ -420,6 +437,31 @@ class eSchool {
 					cause: e
 				};
 				throw new Error(`Failed to get new profile.`, { cause: cause });
+			});
+	}
+
+	/**
+	 * Получает уроки за указанный период
+	 *
+	 * @param userId Айди пользователя
+	 * @param elid Айди периода
+	 */
+	public async getDiaryPeriod(userId: number, elid: number): Promise<diaryPeriods> {
+		return axios
+			.get(`https://app.eschool.center/ec-server/student/getDiaryPeriod/?userId=${userId}&eiId=${elid}`, {
+				headers: {
+					Cookie: `JSESSIONID=${this.sessionId}`
+				}
+			})
+			.then((res) => {
+				return res.data;
+			})
+			.catch((e: AxiosError<any, any>) => {
+				let cause: errorCause = {
+					apiName: "getDiaryPeriod",
+					cause: e
+				};
+				throw new Error(`Failed to get diary period.`, { cause: cause });
 			});
 	}
 }

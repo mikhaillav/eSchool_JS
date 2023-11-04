@@ -58,7 +58,8 @@ export declare type apiName =
 	| "getGroupOnly"
 	| "getPeriodsByGroup"
 	| "getDiaryUnits"
-	| "getProfileNew";
+	| "getProfileNew"
+	| "getDiaryPeriod";
 
 export declare type errorCause = {
 	apiName: apiName;
@@ -368,4 +369,42 @@ export declare type newProfile = {
 	fio?: string;
 	login?: string;
 	pupil?: Array<newProfilePupil>;
+};
+
+export declare type attend = {
+	attendTypeId: number;
+	code: string;
+	name: string;
+	note?: string;
+	typeCatCode: "COMM" | string; //FIXME: Add all of the types
+};
+
+export declare type diaryPeriod = {
+	startDt: string;
+	unitId: number;
+	lesNum: number;
+	statusCode: "ПР" | "ЗП";
+	teachFio: string;
+	lessonId: number;
+	subject: string;
+	lptName?: string;
+	mktWt?: number;
+	lptColor?: string;
+	markId?: number;
+	markVal?: string;
+	markNum?: number;
+	partId?: number;
+	lesNote?: string;
+	markDate?: string;
+	isUpdated?: 1 | 0;
+	maxPoint?: number;
+	isBonus?: 1 | 0;
+	markSysId?: 41 | 5 | 7 | 11 | 6 | 1 | 2 | 3 | 4 | 21 | 8 | 61 | 9 | 10;
+	markSysCode?: "+-" | "10" | "100" | "1000" | "12" | "5" | "5+" | "6" | "7" | "8" | "A" | "NM" | "V" | "YN";
+	markValId?: number;
+	attends?: Array<attend>;
+};
+
+export declare type diaryPeriods = {
+	result: Array<diaryPeriod>;
 };
