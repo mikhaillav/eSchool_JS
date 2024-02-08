@@ -5,7 +5,8 @@ site_author: Mikhail Lavelin
 theme:
   name: material
   language: ru
-  logo: assets/logo.png
+  favicon: material/library
+  logo: material/library
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
