@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - docs
+    paths:
+      - .github/workflows/mkdocs.yml
+      - docs/**
+      - mkdocs.yml
 permissions:
   contents: write
 jobs:
