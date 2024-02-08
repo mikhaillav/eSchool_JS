@@ -1,6 +1,8 @@
 site_name: eSchool_JS
 site_description: Project documentation with Markdown.
 site_author: Mikhail Lavelin
+
+repo_name: mikhaillav/eSchool_JS/
 repo_url: https://github.com/mikhaillav/eSchool_JS/
 
 theme:
