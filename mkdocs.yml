@@ -8,8 +8,9 @@ repo_url: https://github.com/mikhaillav/eSchool_JS/
 theme:
   name: material
   language: ru
-  favicon: material/library
-  logo: material/library
+  favicon: assets/logo.png
+  icon:
+    logo: fontawesome/solid-book-bookmark
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
