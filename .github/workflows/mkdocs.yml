@@ -1,8 +1,6 @@
 name: deploy mkdocs to github pages 
 on:
   push:
-    branches:
-      - docs
     paths:
       - .github/workflows/mkdocs.yml
       - docs/**
