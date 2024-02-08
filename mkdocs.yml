@@ -1,0 +1,35 @@
+site_name: eSchool_JS
+site_description: Project documentation with Markdown.
+site_author: Mikhail Lavelin
+
+repo_name: mikhaillav/eSchool_JS
+repo_url: https://github.com/mikhaillav/eSchool_JS/
+
+theme:
+  name: material
+  language: ru
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  favicon: assets/logo.png
+  icon:
+    logo: material/rocket-launch
+
+plugins:
+  - search
+
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
