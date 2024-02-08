@@ -1,3 +1,6 @@
 site_name: eSchool_JS
 site_description: Project documentation with Markdown.
 site_author: Mikhail Lavelin
+
+theme:
+  name: material
