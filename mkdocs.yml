@@ -2,14 +2,12 @@ site_name: eSchool_JS
 site_description: Project documentation with Markdown.
 site_author: Mikhail Lavelin
 
-repo_name: mikhaillav/eSchool_JS/
+repo_name: mikhaillav/eSchool_JS
 repo_url: https://github.com/mikhaillav/eSchool_JS/
 
 theme:
   name: material
   language: ru
-  favicon: assets/logo.png
-  logo: fontawesome/solid-book-bookmark
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -23,6 +21,9 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+  favicon: assets/logo.png
+  icon:
+    logo: logo
 
 plugins:
   - search
