@@ -23,7 +23,7 @@ theme:
         name: Switch to light mode
   favicon: assets/logo.png
   icon:
-    logo: :fontawesome-solid-book-bookmark:
+    logo: fontawesome/solid-book-bookmark
 
 plugins:
   - search
@@ -33,3 +33,6 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  options:
+        custom_icons:
+          - overrides/.icons
