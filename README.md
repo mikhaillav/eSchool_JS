@@ -8,7 +8,7 @@ npm install eschoolapi
 
 ## Пример получения имени и номера телефона
 ```js
-const { eSchool } = require(eschoolapi");
+const { eSchool } = require("eschoolapi");
 
 const main = async () => {
     const school = new eSchool("Username", "Password");
